@@ -23,6 +23,21 @@
 
         <p>Entrenador: {{ $equipo->entrenador }}</p>
 
+        <a href="{{ route('equipos.edit', $equipo->id) }}">
+            Editar
+        </a>
+
+        <form action="{{ route('equipos.destroy', $equipo->id) }}" method="POST">
+
+            @csrf
+            @method('DELETE')
+
+            <button type="submit">
+                Eliminar
+            </button>
+
+        </form>
+
         <hr>
 
     @endforeach

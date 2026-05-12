@@ -8,8 +8,8 @@
 <body>
 
     <h1>Registrar Equipo</h1>
-
-    <form action="{{ route('equipos.store') }}" method="POST"> //Laravel buscará la ruta:equipos.store
+    
+    <form action="{{ route('equipos.store') }}" method="POST"> 
 
         @csrf
 

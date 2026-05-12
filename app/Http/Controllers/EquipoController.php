@@ -37,16 +37,24 @@ class EquipoController extends Controller
 
     public function edit(Equipo $equipo)
     {
-        //
+        return view('equipos.edit', compact('equipo'));
     }
 
     public function update(Request $request, Equipo $equipo)
     {
-        //
+        $equipo->update([
+            'nombre' => $request->nombre,
+            'ciudad' => $request->ciudad,
+            'entrenador' => $request->entrenador,
+        ]);
+
+        return redirect()->route('equipos.index');
     }
 
     public function destroy(Equipo $equipo)
     {
-        //
+        $equipo->delete();
+
+        return redirect()->route('equipos.index');
     }
 }
