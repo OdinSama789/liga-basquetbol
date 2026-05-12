@@ -21,6 +21,11 @@ class EquipoController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => 'required',
+            'ciudad' => 'required',
+            'entrenador' => 'required',
+        ]);
         Equipo::create([
             'nombre' => $request->nombre,
             'ciudad' => $request->ciudad,

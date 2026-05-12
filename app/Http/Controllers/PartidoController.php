@@ -11,20 +11,32 @@ class PartidoController extends Controller
     public function index()
     {
         $partidos = Partido::with(['equipoLocal', 'equipoVisitante'])->get();
-
         return view('partidos.index', compact('partidos'));
     }
 
     public function create()
     {
         $equipos = Equipo::all();
-
         return view('partidos.create', compact('equipos'));
     }
 
     public function store(Request $request)
     {
-        Partido::create($request->all());
+        $request->validate([
+            'equipo_local_id' => 'required|exists:equipos,id',
+            'equipo_visitante_id' => 'required|exists:equipos,id|different:equipo_local_id',
+            'fecha' => 'required|date',
+            'puntos_local' => 'required|integer|min:0',
+            'puntos_visitante' => 'required|integer|min:0',
+        ]);
+
+        Partido::create($request->only(
+            'equipo_local_id',
+            'equipo_visitante_id',
+            'fecha',
+            'puntos_local',
+            'puntos_visitante'
+        ));
 
         return redirect()->route('partidos.index');
     }
@@ -32,13 +44,26 @@ class PartidoController extends Controller
     public function edit(Partido $partido)
     {
         $equipos = Equipo::all();
-
         return view('partidos.edit', compact('partido', 'equipos'));
     }
 
     public function update(Request $request, Partido $partido)
     {
-        $partido->update($request->all());
+        $request->validate([
+            'equipo_local_id' => 'required|exists:equipos,id',
+            'equipo_visitante_id' => 'required|exists:equipos,id|different:equipo_local_id',
+            'fecha' => 'required|date',
+            'puntos_local' => 'required|integer|min:0',
+            'puntos_visitante' => 'required|integer|min:0',
+        ]);
+
+        $partido->update($request->only(
+            'equipo_local_id',
+            'equipo_visitante_id',
+            'fecha',
+            'puntos_local',
+            'puntos_visitante'
+        ));
 
         return redirect()->route('partidos.index');
     }
@@ -46,7 +71,6 @@ class PartidoController extends Controller
     public function destroy(Partido $partido)
     {
         $partido->delete();
-
         return redirect()->route('partidos.index');
     }
 
