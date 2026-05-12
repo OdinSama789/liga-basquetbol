@@ -2,30 +2,87 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Equipo</title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
-<body>
 
-    <h1>Editar Equipo</h1>
+<body class="bg-dark text-white">
 
-    <form action="{{ route('equipos.update', $equipo->id) }}" method="POST">
-        @csrf
-        @method('PUT')
+<div class="container mt-5">
 
-        <label>Nombre del equipo:</label><br>
-        <input type="text" name="nombre" value="{{ $equipo->nombre }}"><br><br>
+    <div class="card shadow p-4">
 
-        <label>Ciudad:</label><br>
-        <input type="text" name="ciudad" value="{{ $equipo->ciudad }}"><br><br>
+        <h1 class="text-center text-primary mb-4">
+            ✏️ Editar Equipo
+        </h1>
 
-        <label>Entrenador:</label><br>
-        <input type="text" name="entrenador" value="{{ $equipo->entrenador }}"><br><br>
+        <form action="{{ route('equipos.update', $equipo->id) }}"
+            method="POST">
 
-        <button type="submit">Actualizar Equipo</button>
-    </form>
+            @csrf
+            @method('PUT')
 
-    <br>
-    <a href="{{ route('equipos.index') }}">Volver</a>
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Nombre del equipo
+                </label>
+
+                <input type="text"
+                    name="nombre"
+                    value="{{ $equipo->nombre }}"
+                    class="form-control">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Ciudad
+                </label>
+
+                <input type="text"
+                    name="ciudad"
+                    value="{{ $equipo->ciudad }}"
+                    class="form-control">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Entrenador
+                </label>
+
+                <input type="text"
+                    name="entrenador"
+                    value="{{ $equipo->entrenador }}"
+                    class="form-control">
+
+            </div>
+
+            <button type="submit"
+                class="btn btn-primary w-100">
+
+                Actualizar Equipo
+
+            </button>
+
+        </form>
+
+        <a href="{{ route('equipos.index') }}"
+            class="btn btn-secondary mt-3">
+
+            Volver
+
+        </a>
+
+    </div>
+
+</div>
 
 </body>
 </html>

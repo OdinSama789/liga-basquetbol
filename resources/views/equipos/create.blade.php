@@ -4,33 +4,80 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Crear Equipo</title>
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
-<body>
 
-    <h1>Registrar Equipo</h1>
-    
-    <form action="{{ route('equipos.store') }}" method="POST"> 
+<body class="bg-dark text-white">
 
-        @csrf
+<div class="container mt-5">
 
-        <label>Nombre del equipo:</label>
-        <br>
-        <input type="text" name="nombre">
-        <br><br>
+    <div class="card shadow p-4">
 
-        <label>Ciudad:</label>
-        <br>
-        <input type="text" name="ciudad">
-        <br><br>
+        <h1 class="text-center text-success mb-4">
+            🏀 Registrar Equipo
+        </h1>
 
-        <label>Entrenador:</label>
-        <br>
-        <input type="text" name="entrenador">
-        <br><br>
+        <form action="{{ route('equipos.store') }}" method="POST">
 
-        <button type="submit">Guardar Equipo</button>
+            @csrf
 
-    </form>
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Nombre del equipo
+                </label>
+
+                <input type="text"
+                    name="nombre"
+                    class="form-control">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Ciudad
+                </label>
+
+                <input type="text"
+                    name="ciudad"
+                    class="form-control">
+
+            </div>
+
+            <div class="mb-3">
+
+                <label class="form-label">
+                    Entrenador
+                </label>
+
+                <input type="text"
+                    name="entrenador"
+                    class="form-control">
+
+            </div>
+
+            <button type="submit"
+                class="btn btn-success w-100">
+
+                Guardar Equipo
+
+            </button>
+
+        </form>
+
+        <a href="{{ route('equipos.index') }}"
+            class="btn btn-secondary mt-3">
+
+            Volver
+
+        </a>
+
+    </div>
+
+</div>
 
 </body>
-</html> 
+</html>
