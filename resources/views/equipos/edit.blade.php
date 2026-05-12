@@ -6,10 +6,17 @@
     <title>Editar Equipo</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
 </head>
 
 <body class="bg-dark text-white">
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-black shadow">
+    <div class="container">
+        <a class="navbar-brand text-warning fw-bold" href="/equipos">
+            🏀 Liga de Básquetbol
+        </a>
+    </div>
+</nav>
 
 <div class="container mt-5">
 
@@ -19,65 +26,41 @@
             ✏️ Editar Equipo
         </h1>
 
-        <form action="{{ route('equipos.update', $equipo->id) }}"
-            method="POST">
-
+        <form action="{{ route('equipos.update', $equipo->id) }}" method="POST">
             @csrf
             @method('PUT')
 
             <div class="mb-3">
-
-                <label class="form-label">
-                    Nombre del equipo
-                </label>
-
+                <label class="form-label">Nombre del equipo</label>
                 <input type="text"
-                    name="nombre"
-                    value="{{ $equipo->nombre }}"
-                    class="form-control">
-
+                       name="nombre"
+                       value="{{ $equipo->nombre }}"
+                       class="form-control">
             </div>
 
             <div class="mb-3">
-
-                <label class="form-label">
-                    Ciudad
-                </label>
-
+                <label class="form-label">Ciudad</label>
                 <input type="text"
-                    name="ciudad"
-                    value="{{ $equipo->ciudad }}"
-                    class="form-control">
-
+                       name="ciudad"
+                       value="{{ $equipo->ciudad }}"
+                       class="form-control">
             </div>
 
             <div class="mb-3">
-
-                <label class="form-label">
-                    Entrenador
-                </label>
-
+                <label class="form-label">Entrenador</label>
                 <input type="text"
-                    name="entrenador"
-                    value="{{ $equipo->entrenador }}"
-                    class="form-control">
-
+                       name="entrenador"
+                       value="{{ $equipo->entrenador }}"
+                       class="form-control">
             </div>
 
-            <button type="submit"
-                class="btn btn-primary w-100">
-
+            <button type="submit" class="btn btn-primary w-100">
                 Actualizar Equipo
-
             </button>
-
         </form>
 
-        <a href="{{ route('equipos.index') }}"
-            class="btn btn-secondary mt-3">
-
+        <a href="{{ route('equipos.index') }}" class="btn btn-secondary mt-3">
             Volver
-
         </a>
 
     </div>

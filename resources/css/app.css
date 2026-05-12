@@ -1,1 +1,13 @@
 @import 'bootstrap/dist/css/bootstrap.min.css';
+.card {
+    transition: 0.3s;
+    border-radius: 15px;
+}
+
+.card:hover {
+    transform: scale(1.03);
+}
+
+.btn {
+    border-radius: 10px;
+}

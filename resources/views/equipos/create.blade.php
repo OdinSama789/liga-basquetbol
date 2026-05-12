@@ -10,7 +10,20 @@
 </head>
 
 <body class="bg-dark text-white">
+<nav class="navbar navbar-expand-lg navbar-dark bg-black shadow">
 
+    <div class="container">
+
+        <a class="navbar-brand text-warning fw-bold"
+            href="/equipos">
+
+            🏀 Liga de Básquetbol
+
+        </a>
+
+    </div>
+
+</nav>
 <div class="container mt-5">
 
     <div class="card shadow p-4">
