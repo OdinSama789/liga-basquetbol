@@ -72,6 +72,13 @@
                         {{ $jugador->equipo->nombre }}
                     </p>
 
+                    <a href="{{ route('jugadores.show', ['jugador' => $jugador->id]) }}"
+                        class="btn btn-warning">
+
+                        Ver
+
+                    </a>
+
                     <a href="{{ route('jugadores.edit', ['jugador' => $jugador->id]) }}"
                         class="btn btn-primary">
 

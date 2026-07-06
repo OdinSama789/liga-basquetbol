@@ -54,6 +54,13 @@ class JugadorController extends Controller
         return redirect()->route('jugadores.index');
     }
 
+    public function show(Jugador $jugador)
+{
+    $jugador->load('equipo');
+
+    return view('jugadores.show', compact('jugador'));
+}
+
     public function destroy(Jugador $jugador)
     {
         $jugador->delete();
