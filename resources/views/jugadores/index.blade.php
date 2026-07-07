@@ -1,111 +1,66 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jugadores</title>
+@extends('layouts.app')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+@section('title', 'Jugadores')
 
-<body class="bg-dark text-white">
+@section('content')
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-black shadow">
-    <div class="container">
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold text-danger">⛹️ Lista de Jugadores</h1>
 
-        <a class="navbar-brand text-warning fw-bold" href="/equipos">
-            🏀 Liga de Básquetbol
-        </a>
-
-        <div>
-            <a href="/equipos" class="btn btn-outline-warning btn-sm">
-                Equipos
-            </a>
-
-            <a href="/jugadores" class="btn btn-outline-light btn-sm">
-                Jugadores
-            </a>
-        </div>
-
-    </div>
-</nav>
-
-<div class="container mt-5">
-
-    <h1 class="text-warning mb-4">
-        ⛹️ Lista de Jugadores
-    </h1>
-
-    <a href="{{ route('jugadores.create') }}"
-        class="btn btn-success mb-4">
-
+    <a href="{{ route('jugadores.create') }}" class="btn btn-success">
         + Registrar Jugador
-
     </a>
-
-    <div class="row">
-
-        @foreach($jugadores as $jugador)
-
-        <div class="col-md-4">
-
-            <div class="card mb-4 shadow">
-
-                <div class="card-body">
-
-                    <h3 class="card-title">
-                        {{ $jugador->nombre }}
-                    </h3>
-
-                    <p>
-                        <strong>Edad:</strong>
-                        {{ $jugador->edad }}
-                    </p>
-
-                    <p>
-                        <strong>Posición:</strong>
-                        {{ $jugador->posicion }}
-                    </p>
-
-                    <p>
-                        <strong>Equipo:</strong>
-                        {{ $jugador->equipo->nombre }}
-                    </p>
-
-                    <a href="{{ route('jugadores.edit', ['jugador' => $jugador->id]) }}"
-                        class="btn btn-primary">
-
-                        Editar
-
-                    </a>
-
-                    <form action="{{ route('jugadores.destroy', ['jugador' => $jugador->id]) }}"
-                        method="POST"
-                        class="d-inline">
-
-                        @csrf
-                        @method('DELETE')
-
-                        <button type="submit"
-                            class="btn btn-danger">
-
-                            Eliminar
-
-                        </button>
-
-                    </form>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        @endforeach
-
-    </div>
-
 </div>
 
-</body>
-</html>
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Jugador</th>
+                    <th>Edad</th>
+                    <th>Posición</th>
+                    <th>Equipo</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($jugadores as $jugador)
+                <tr>
+                    <td>{{ $jugador->id }}</td>
+                    <td class="fw-bold">{{ $jugador->nombre }}</td>
+                    <td>{{ $jugador->edad }}</td>
+                    <td>{{ $jugador->posicion }}</td>
+                    <td>{{ $jugador->equipo->nombre ?? 'Sin equipo' }}</td>
+
+                    <td class="text-center">
+                        <a href="{{ route('jugadores.edit', $jugador->id) }}"
+                           class="btn btn-primary btn-sm">
+                            ✏️ Editar
+                        </a>
+
+                        <form action="{{ route('jugadores.destroy', $jugador->id) }}"
+                              method="POST"
+                              class="d-inline"
+                              onsubmit="return confirm('¿Seguro que deseas eliminar este jugador?');">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                🗑️ Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@endsection
