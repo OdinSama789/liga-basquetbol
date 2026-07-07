@@ -32,7 +32,8 @@ class EquipoController extends Controller
             'entrenador' => $request->entrenador,
         ]);
 
-        return redirect()->route('equipos.index');
+        return redirect()->route('equipos.index')
+            ->with('success', '✅ Equipo registrado correctamente.');
     }
 
     public function show(Equipo $equipo)
@@ -53,13 +54,15 @@ class EquipoController extends Controller
             'entrenador' => $request->entrenador,
         ]);
 
-        return redirect()->route('equipos.index');
+        return redirect()->route('equipos.index')
+            ->with('success', '✏️ Equipo actualizado correctamente.');
     }
 
     public function destroy(Equipo $equipo)
     {
         $equipo->delete();
 
-        return redirect()->route('equipos.index');
+        return redirect()->route('equipos.index')
+            ->with('success', '🗑 Equipo eliminado correctamente.');
     }
 }
