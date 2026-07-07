@@ -1,84 +1,64 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Equipos</title>
+@extends('layouts.app')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+@section('title', 'Equipos')
 
-</head>
+@section('content')
 
-<body class="bg-dark text-white">
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1 class="fw-bold text-danger">🏀 Lista de Equipos</h1>
 
-<div class="container mt-5">
-
-    <h1 class="text-warning mb-4">
-        🏀 Lista de Equipos
-    </h1>
-
-    <a href="/equipos/create" class="btn btn-success mb-4">
+    <a href="{{ route('equipos.create') }}" class="btn btn-success">
         + Crear Equipo
     </a>
-
-    <div class="row">
-
-        @foreach($equipos as $equipo)
-
-        <div class="col-md-4">
-
-            <div class="card mb-4 shadow">
-
-                <div class="card-body">
-
-                    <h3 class="card-title">
-                        {{ $equipo->nombre }}
-                    </h3>
-
-                    <p class="card-text">
-                        <strong>Ciudad:</strong>
-                        {{ $equipo->ciudad }}
-                    </p>
-
-                    <p class="card-text">
-                        <strong>Entrenador:</strong>
-                        {{ $equipo->entrenador }}
-                    </p>
-
-                    <a href="{{ route('equipos.edit', $equipo->id) }}"
-                        class="btn btn-primary">
-
-                        Editar
-
-                    </a>
-
-                    <form action="{{ route('equipos.destroy', $equipo->id) }}"
-                        method="POST"
-                        class="d-inline">
-
-                        @csrf
-                        @method('DELETE')
-
-                        <button type="submit"
-                            class="btn btn-danger">
-
-                            Eliminar
-
-                        </button>
-
-                    </form>
-
-                </div>
-
-            </div>
-
-        </div>
-
-        @endforeach
-
-    </div>
-
 </div>
 
-</body>
-</html>
+<div class="card border-0 shadow-sm">
+    <div class="card-body">
+
+        <table class="table table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Equipo</th>
+                    <th>Ciudad</th>
+                    <th>Entrenador</th>
+                    <th class="text-center">Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @foreach($equipos as $equipo)
+                <tr>
+                    <td>{{ $equipo->id }}</td>
+                    <td class="fw-bold">🏀 {{ $equipo->nombre }}</td>
+                    <td>{{ $equipo->ciudad }}</td>
+                    <td>{{ $equipo->entrenador }}</td>
+
+                    <td class="text-center">
+                        <a href="{{ route('equipos.edit', $equipo->id) }}"
+                           class="btn btn-primary btn-sm">
+                            ✏️ Editar
+                        </a>
+
+                        <form action="{{ route('equipos.destroy', $equipo->id) }}"
+                              method="POST"
+                              class="d-inline"
+                              onsubmit="return confirm('¿Seguro que deseas eliminar este equipo?');">
+
+                            @csrf
+                            @method('DELETE')
+
+                            <button type="submit" class="btn btn-danger btn-sm">
+                                🗑 Eliminar
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
+</div>
+
+@endsection
