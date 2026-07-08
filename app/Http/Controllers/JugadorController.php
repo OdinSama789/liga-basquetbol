@@ -10,7 +10,9 @@ class JugadorController extends Controller
 {
     public function index()
     {
-        $jugadores = Jugador::with('equipo')->get();
+        $jugadores = Jugador::with('equipo')
+            ->orderBy('nombre')
+             ->get();
         return view('jugadores.index', compact('jugadores'));
     }
 
@@ -31,7 +33,8 @@ class JugadorController extends Controller
 
         Jugador::create($request->only('nombre', 'edad', 'posicion', 'equipo_id'));
 
-        return redirect()->route('jugadores.index');
+        return redirect()->route('jugadores.index')
+            ->with('success','Jugador registrado correctamente.');
     }
 
     public function edit(Jugador $jugador)
@@ -51,7 +54,8 @@ class JugadorController extends Controller
 
         $jugador->update($request->only('nombre', 'edad', 'posicion', 'equipo_id'));
 
-        return redirect()->route('jugadores.index');
+        return redirect()->route('jugadores.index')
+            ->with('success','Jugador eliminado correctamente.');
     }
 
     public function show(Jugador $jugador)
@@ -64,6 +68,7 @@ class JugadorController extends Controller
     public function destroy(Jugador $jugador)
     {
         $jugador->delete();
-        return redirect()->route('jugadores.index');
+       return redirect()->route('jugadores.index')
+         ->with('success','Jugador eliminado correctamente.');
     }
 }
