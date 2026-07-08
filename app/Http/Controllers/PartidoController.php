@@ -10,7 +10,9 @@ class PartidoController extends Controller
 {
     public function index()
     {
-        $partidos = Partido::with(['equipoLocal', 'equipoVisitante'])->get();
+        $partidos = Partido::with(['equipoLocal', 'equipoVisitante'])
+            ->orderBy('fecha', 'desc')
+            ->get();
         return view('partidos.index', compact('partidos'));
     }
 
@@ -38,7 +40,8 @@ class PartidoController extends Controller
             'puntos_visitante'
         ));
 
-        return redirect()->route('partidos.index');
+        return redirect()->route('partidos.index')
+            ->with('success', 'Partido registrado correctamente.');
     }
 
     public function edit(Partido $partido)
@@ -65,13 +68,15 @@ class PartidoController extends Controller
             'puntos_visitante'
         ));
 
-        return redirect()->route('partidos.index');
+        return redirect()->route('partidos.index')
+            ->with('success', 'Partido actualizado correctamente.');
     }
 
     public function destroy(Partido $partido)
     {
         $partido->delete();
-        return redirect()->route('partidos.index');
+        return redirect()->route('partidos.index')
+            ->with('success', 'Partido eliminado correctamente.');
     }
 
     public function tabla()

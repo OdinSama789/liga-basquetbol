@@ -6,9 +6,20 @@ use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\PartidoController;
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()->route('dashboard');
 });
 
+Route::get('/dashboard', function () {
+    $totalEquipos = \App\Models\Equipo::count();
+    $totalJugadores = \App\Models\Jugador::count();
+    $totalPartidos = \App\Models\Partido::count();
+
+    return view('dashboard', compact(
+        'totalEquipos',
+        'totalJugadores',
+        'totalPartidos'
+    ));
+})->name('dashboard');
 // Rutas de equipos
 Route::get('/equipos', [EquipoController::class, 'index'])->name('equipos.index');
 Route::get('/equipos/create', [EquipoController::class, 'create'])->name('equipos.create');
