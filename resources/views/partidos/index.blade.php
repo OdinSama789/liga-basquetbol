@@ -5,7 +5,7 @@
 @section('content')
 
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h1 class="fw-bold text-danger">🏀 Lista de Partidos</h1>
+    <h1 class="fw-bold text-danger">🏀 Gestión de Partidos</h1>
 
     <a href="{{ route('partidos.create') }}" class="btn btn-success">
         + Registrar Partido
