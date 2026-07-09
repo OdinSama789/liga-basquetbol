@@ -40,8 +40,43 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Posición</label>
-                <input type="text" name="posicion" value="{{ $jugador->posicion }}" class="form-control">
+
+                <label class="form-label">
+                    Posición
+                </label>
+
+                <select
+                    name="posicion"
+                    class="form-select"
+                    required>
+
+                    <option value="Base"
+                        {{ $jugador->posicion == 'Base' ? 'selected' : '' }}>
+                        🏀 Base (Point Guard)
+                    </option>
+
+                    <option value="Escolta"
+                        {{ $jugador->posicion == 'Escolta' ? 'selected' : '' }}>
+                        🎯 Escolta (Shooting Guard)
+                    </option>
+
+                    <option value="Alero"
+                        {{ $jugador->posicion == 'Alero' ? 'selected' : '' }}>
+                        ⚡ Alero (Small Forward)
+                    </option>
+
+                    <option value="Ala-Pívot"
+                        {{ $jugador->posicion == 'Ala-Pívot' ? 'selected' : '' }}>
+                        💪 Ala-Pívot (Power Forward)
+                    </option>
+
+                    <option value="Pívot"
+                        {{ $jugador->posicion == 'Pívot' ? 'selected' : '' }}>
+                        🗼 Pívot (Center)
+                    </option>
+
+                </select>
+
             </div>
 
             <div class="mb-3">

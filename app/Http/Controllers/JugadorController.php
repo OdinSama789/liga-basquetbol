@@ -28,7 +28,7 @@ class JugadorController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:100',
             'edad' => 'required|integer|min:1|max:60',
-            'posicion' => 'required|string|max:100',
+            'posicion' => 'required|in:Base,Escolta,Alero,Ala-Pívot,Pívot',
             'equipo_id' => 'required|exists:equipos,id',
         ]);
 
@@ -55,7 +55,7 @@ class JugadorController extends Controller
         $request->validate([
             'nombre' => 'required|string|max:100',
             'edad' => 'required|integer|min:1|max:60',
-            'posicion' => 'required|string|max:100',
+            'posicion' => 'required|in:Base,Escolta,Alero,Ala-Pívot,Pívot',
             'equipo_id' => 'required|exists:equipos,id',
         ]);
 

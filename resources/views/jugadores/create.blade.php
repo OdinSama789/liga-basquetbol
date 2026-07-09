@@ -68,9 +68,36 @@
                     Posición
                 </label>
 
-                <input type="text"
+                <select
                     name="posicion"
-                    class="form-control">
+                    class="form-select"
+                    required>
+
+                    <option value="">
+                        Seleccione una posición
+                    </option>
+
+                    <option value="Base">
+                        🏀 Base (Point Guard)
+                    </option>
+
+                    <option value="Escolta">
+                        🎯 Escolta (Shooting Guard)
+                    </option>
+
+                    <option value="Alero">
+                        ⚡ Alero (Small Forward)
+                    </option>
+
+                    <option value="Ala-Pívot">
+                        💪 Ala-Pívot (Power Forward)
+                    </option>
+
+                    <option value="Pívot">
+                        🗼 Pívot (Center)
+                    </option>
+
+                </select>
 
             </div>
 
