@@ -12,63 +12,64 @@ class JugadorController extends Controller
     {
         $jugadores = Jugador::with('equipo')
             ->orderBy('nombre')
-             ->get();
+            ->get();
+
         return view('jugadores.index', compact('jugadores'));
     }
 
     public function create()
     {
-        $equipos = Equipo::all();
+        $equipos = Equipo::orderBy('nombre')->get();
         return view('jugadores.create', compact('equipos'));
     }
 
     public function store(Request $request)
     {
         $request->validate([
-            'nombre' => 'required',
-            'edad' => 'required|integer|min:1',
-            'posicion' => 'required',
+            'nombre' => 'required|string|max:100',
+            'edad' => 'required|integer|min:1|max:60',
+            'posicion' => 'required|string|max:100',
             'equipo_id' => 'required|exists:equipos,id',
         ]);
 
         Jugador::create($request->only('nombre', 'edad', 'posicion', 'equipo_id'));
 
         return redirect()->route('jugadores.index')
-            ->with('success','Jugador registrado correctamente.');
+            ->with('success', '✅ Jugador registrado correctamente.');
+    }
+
+    public function show(Jugador $jugador)
+    {
+        $jugador->load('equipo');
+        return view('jugadores.show', compact('jugador'));
     }
 
     public function edit(Jugador $jugador)
     {
-        $equipos = Equipo::all();
+        $equipos = Equipo::orderBy('nombre')->get();
         return view('jugadores.edit', compact('jugador', 'equipos'));
     }
 
     public function update(Request $request, Jugador $jugador)
     {
         $request->validate([
-            'nombre' => 'required',
-            'edad' => 'required|integer|min:1',
-            'posicion' => 'required',
+            'nombre' => 'required|string|max:100',
+            'edad' => 'required|integer|min:1|max:60',
+            'posicion' => 'required|string|max:100',
             'equipo_id' => 'required|exists:equipos,id',
         ]);
 
         $jugador->update($request->only('nombre', 'edad', 'posicion', 'equipo_id'));
 
         return redirect()->route('jugadores.index')
-            ->with('success','Jugador eliminado correctamente.');
+            ->with('success', '✏️ Jugador actualizado correctamente.');
     }
-
-    public function show(Jugador $jugador)
-{
-    $jugador->load('equipo');
-
-    return view('jugadores.show', compact('jugador'));
-}
 
     public function destroy(Jugador $jugador)
     {
         $jugador->delete();
-       return redirect()->route('jugadores.index')
-         ->with('success','Jugador eliminado correctamente.');
+
+        return redirect()->route('jugadores.index')
+            ->with('success', '🗑 Jugador eliminado correctamente.');
     }
 }
