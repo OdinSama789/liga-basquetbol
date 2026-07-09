@@ -4,22 +4,100 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EquipoController;
 use App\Http\Controllers\JugadorController;
 use App\Http\Controllers\PartidoController;
+use App\Models\Equipo;
+use App\Models\Jugador;
+use App\Models\Partido;
 
 Route::get('/', function () {
     return redirect()->route('dashboard');
 });
 
 Route::get('/dashboard', function () {
-    $totalEquipos = \App\Models\Equipo::count();
-    $totalJugadores = \App\Models\Jugador::count();
-    $totalPartidos = \App\Models\Partido::count();
+    $totalEquipos = Equipo::count();
+    $totalJugadores = Jugador::count();
+    $totalPartidos = Partido::count();
+
+    $equipos = Equipo::withCount('jugadores')
+        ->orderBy('nombre')
+        ->get();
+
+    $ultimosJugadores = Jugador::with('equipo')
+        ->latest()
+        ->take(5)
+        ->get();
+
+    $ultimosPartidos = Partido::with(['equipoLocal', 'equipoVisitante'])
+        ->orderBy('fecha', 'desc')
+        ->take(5)
+        ->get();
+
+    $tabla = [];
+
+    foreach ($equipos as $equipo) {
+        $ganados = 0;
+        $perdidos = 0;
+        $favor = 0;
+        $contra = 0;
+
+        $partidosLocal = Partido::where('equipo_local_id', $equipo->id)->get();
+
+        foreach ($partidosLocal as $partido) {
+            $favor += $partido->puntos_local;
+            $contra += $partido->puntos_visitante;
+
+            if ($partido->puntos_local > $partido->puntos_visitante) {
+                $ganados++;
+            } else {
+                $perdidos++;
+            }
+        }
+
+        $partidosVisitante = Partido::where('equipo_visitante_id', $equipo->id)->get();
+
+        foreach ($partidosVisitante as $partido) {
+            $favor += $partido->puntos_visitante;
+            $contra += $partido->puntos_local;
+
+            if ($partido->puntos_visitante > $partido->puntos_local) {
+                $ganados++;
+            } else {
+                $perdidos++;
+            }
+        }
+
+        $tabla[] = [
+            'equipo' => $equipo->nombre,
+            'jugadores' => $equipo->jugadores_count,
+            'partidos' => $ganados + $perdidos,
+            'ganados' => $ganados,
+            'perdidos' => $perdidos,
+            'favor' => $favor,
+            'contra' => $contra,
+            'diferencia' => $favor - $contra,
+            'puntos' => $ganados * 2,
+        ];
+    }
+
+    usort($tabla, function ($a, $b) {
+        return $b['puntos'] <=> $a['puntos']
+            ?: $b['diferencia'] <=> $a['diferencia']
+            ?: $b['favor'] <=> $a['favor'];
+    });
+
+    $lider = $tabla[0]['equipo'] ?? 'Sin líder';
 
     return view('dashboard', compact(
         'totalEquipos',
         'totalJugadores',
-        'totalPartidos'
+        'totalPartidos',
+        'equipos',
+        'ultimosJugadores',
+        'ultimosPartidos',
+        'tabla',
+        'lider'
     ));
 })->name('dashboard');
+
 // Rutas de equipos
 Route::get('/equipos', [EquipoController::class, 'index'])->name('equipos.index');
 Route::get('/equipos/create', [EquipoController::class, 'create'])->name('equipos.create');

@@ -1,55 +1,66 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Tabla de Posiciones</title>
+@extends('layouts.app')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+@section('title', 'Tabla de Posiciones')
 
-<body class="bg-dark text-white">
+@section('content')
 
-<div class="container mt-5">
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="fw-bold mb-1">🏆 Tabla de Posiciones</h1>
+        <p class="text-muted mb-0">Clasificación general de equipos según partidos registrados.</p>
+    </div>
 
-    <h1 class="text-warning mb-4">
-        🏆 Tabla de Posiciones
-    </h1>
-
-    <table class="table table-dark table-striped">
-
-        <thead>
-
-            <tr>
-                <th>Equipo</th>
-                <th>Ganados</th>
-                <th>Perdidos</th>
-                <th>Puntos Favor</th>
-                <th>Puntos Contra</th>
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            @foreach($tabla as $fila)
-
-            <tr>
-
-                <td>{{ $fila['equipo'] }}</td>
-                <td>{{ $fila['ganados'] }}</td>
-                <td>{{ $fila['perdidos'] }}</td>
-                <td>{{ $fila['favor'] }}</td>
-                <td>{{ $fila['contra'] }}</td>
-
-            </tr>
-
-            @endforeach
-
-        </tbody>
-
-    </table>
-
+    <a href="{{ route('dashboard') }}" class="btn btn-outline-dark">
+        <i class="bi bi-arrow-left"></i> Dashboard
+    </a>
 </div>
 
-</body>
-</html>
+<div class="card content-card">
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Equipo</th>
+                        <th>PG</th>
+                        <th>PP</th>
+                        <th>PF</th>
+                        <th>PC</th>
+                        <th>DIF</th>
+                        <th>PTS</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @forelse($tabla as $index => $fila)
+                        <tr>
+                            <td class="fw-bold">{{ $index + 1 }}</td>
+                            <td class="fw-bold">🏀 {{ $fila['equipo'] }}</td>
+                            <td><span class="badge bg-success">{{ $fila['ganados'] }}</span></td>
+                            <td><span class="badge bg-danger">{{ $fila['perdidos'] }}</span></td>
+                            <td>{{ $fila['favor'] }}</td>
+                            <td>{{ $fila['contra'] }}</td>
+                            <td>{{ $fila['favor'] - $fila['contra'] }}</td>
+                            <td>
+                                <span class="badge bg-warning text-dark">
+                                    {{ $fila['ganados'] * 2 }}
+                                </span>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="8" class="text-center text-muted py-4">
+                                No hay datos para mostrar. Registra partidos primero.
+                            </td>
+                        </tr>
+                    @endforelse
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+@endsection
