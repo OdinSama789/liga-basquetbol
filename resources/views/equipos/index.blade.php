@@ -25,6 +25,14 @@
     </a>
 </div>
 
+<div class="mb-3">
+    <input
+        type="text"
+        id="buscarEquipo"
+        class="form-control"
+        placeholder="🔍 Buscar equipo...">
+</div>
+
 <div class="card border-0 shadow-sm">
     <div class="card-body">
 
@@ -41,7 +49,7 @@
 
             <tbody>
                 @foreach($equipos as $equipo)
-                <tr>
+                <tr class="fila-equipo">
                     <td>{{ $equipo->id }}</td>
                     <td class="fw-bold">🏀 {{ $equipo->nombre }}</td>
                     <td>{{ $equipo->ciudad }}</td>
@@ -54,9 +62,8 @@
                         </a>
 
                         <form action="{{ route('equipos.destroy', $equipo->id) }}"
-                              method="POST"
-                              class="d-inline"
-                              onsubmit="return confirm('¿Seguro que deseas eliminar este equipo?');">
+                            method="POST"
+                            class="d-inline formulario-eliminar">
 
                             @csrf
                             @method('DELETE')
@@ -64,6 +71,7 @@
                             <button type="submit" class="btn btn-danger btn-sm">
                                 🗑 Eliminar
                             </button>
+
                         </form>
                     </td>
                 </tr>
@@ -73,5 +81,29 @@
 
     </div>
 </div>
+
+<script>
+const buscar = document.getElementById('buscarEquipo');
+
+if (buscar) {
+
+    buscar.addEventListener('keyup', function () {
+
+        let texto = this.value.toLowerCase();
+
+        document.querySelectorAll('.fila-equipo').forEach(function(fila){
+
+            if(fila.innerText.toLowerCase().includes(texto)){
+                fila.style.display = '';
+            }else{
+                fila.style.display = 'none';
+            }
+
+        });
+
+    });
+
+}
+</script>
 
 @endsection

@@ -88,6 +88,27 @@
             box-shadow: 0 8px 24px rgba(0,0,0,.08);
         }
 
+        .card,
+        .content-card,
+        .stat-card{
+            transition: .25s ease;
+        }
+
+        .card:hover,
+        .content-card:hover,
+        .stat-card:hover{
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,.15);
+        }
+
+        .btn{
+            transition: .25s;
+        }
+
+        .btn:hover{
+            transform: scale(1.05);
+        }
+
         .empty-box {
             background: linear-gradient(120deg, #f5f8ff, #ffffff);
             border-radius: 14px;
@@ -459,9 +480,22 @@
 
         </div>
 
-        <footer class="d-flex justify-content-between text-muted mt-5 small">
-            <span>© 2026 BasketTotal - Sistema de Gestión de Liga de Básquetbol</span>
-            <span>Desarrollado con ❤️ para el básquetbol</span>
+        <footer class="text-center mt-5 border-top pt-4">
+
+            <h5 class="fw-bold text-danger">
+                🏀 BasketTotal
+            </h5>
+
+            <p class="mb-1">
+                Sistema de Gestión de Liga de Básquetbol
+            </p>
+
+            <small class="text-muted">
+                Universidad Tecnológica de los Andes<br>
+                Ingeniería de Sistemas e Informática<br>
+                2026
+            </small>
+
         </footer>
 
     </div>
