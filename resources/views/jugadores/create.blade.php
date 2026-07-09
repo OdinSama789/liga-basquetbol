@@ -1,121 +1,77 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Jugador</title>
+@extends('layouts.app')
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-</head>
+@section('title', 'Registrar Jugador')
 
-<body class="bg-dark text-white">
+@section('content')
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-black shadow">
-
-    <div class="container">
-
-        <a class="navbar-brand text-warning fw-bold"
-            href="/jugadores">
-
-            🏀 Liga de Básquetbol
-
-        </a>
-
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="fw-bold mb-1">⛹️ Registrar Jugador</h1>
+        <p class="text-muted mb-0">Agrega un nuevo jugador a un equipo registrado.</p>
     </div>
 
-</nav>
+    <a href="{{ route('jugadores.index') }}" class="btn btn-outline-dark">
+        <i class="bi bi-arrow-left"></i> Volver
+    </a>
+</div>
 
-<div class="container mt-5">
+@if($errors->any())
+    <div class="alert alert-danger">
+        <strong>Revisa estos errores:</strong>
+        <ul class="mb-0 mt-2">
+            @foreach($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
-    <div class="card shadow p-4">
+<div class="card content-card">
+    <div class="card-body">
 
-        <h1 class="text-center text-success mb-4">
-            ⛹️ Registrar Jugador
-        </h1>
-
-        <form action="{{ route('jugadores.store') }}"
-            method="POST">
-
+        <form action="{{ route('jugadores.store') }}" method="POST">
             @csrf
 
             <div class="mb-3">
-
-                <label class="form-label">
-                    Nombre
-                </label>
-
-                <input type="text"
-                    name="nombre"
-                    class="form-control">
-
+                <label class="form-label fw-bold">Nombre</label>
+                <input type="text" name="nombre" class="form-control" value="{{ old('nombre') }}" required>
             </div>
 
             <div class="mb-3">
-
-                <label class="form-label">
-                    Edad
-                </label>
-
-                <input type="number"
-                    name="edad"
-                    class="form-control">
-
+                <label class="form-label fw-bold">Edad</label>
+                <input type="number" name="edad" class="form-control" value="{{ old('edad') }}" min="1" required>
             </div>
 
             <div class="mb-3">
-
-                <label class="form-label">
-                    Posición
-                </label>
-
-                <input type="text"
-                    name="posicion"
-                    class="form-control">
-
-            </div>
-
-            <div class="mb-3">
-
-                <label class="form-label">
-                    Equipo
-                </label>
-
-                <select name="equipo_id"
-                    class="form-select">
-
-                    @foreach($equipos as $equipo)
-
-                        <option value="{{ $equipo->id }}">
-
-                            {{ $equipo->nombre }}
-
-                        </option>
-
-                    @endforeach
-
+                <label class="form-label fw-bold">Posición</label>
+                <select name="posicion" class="form-select" required>
+                    <option value="">Seleccione una posición</option>
+                    <option value="Base">Base</option>
+                    <option value="Escolta">Escolta</option>
+                    <option value="Alero">Alero</option>
+                    <option value="Ala-Pívot">Ala-Pívot</option>
+                    <option value="Pívot">Pívot</option>
                 </select>
-
             </div>
 
-            <button type="submit"
-                class="btn btn-success w-100">
+            <div class="mb-4">
+                <label class="form-label fw-bold">Equipo</label>
+                <select name="equipo_id" class="form-select" required>
+                    <option value="">Seleccione un equipo</option>
+                    @foreach($equipos as $equipo)
+                        <option value="{{ $equipo->id }}">
+                            {{ $equipo->nombre }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-                Guardar Jugador
-
+            <button class="btn btn-success w-100">
+                <i class="bi bi-save"></i> Guardar Jugador
             </button>
-
         </form>
 
-        <a href="{{ route('jugadores.index') }}"
-            class="btn btn-secondary mt-3">
-
-            Volver
-
-        </a>
-
     </div>
-
 </div>
 
-</body>
-</html>
+@endsection
