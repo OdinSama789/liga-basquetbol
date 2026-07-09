@@ -57,3 +57,12 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+---
+
+## Cambios realizados en el proyecto
+
+- Se corrigió la tabla de jugadores en la migración.
+- Se mejoraron las validaciones del módulo Jugadores.
+- Se configuró la caché en modo archivo para evitar errores de base de datos.
+- Se verificó el funcionamiento del dashboard principal.
