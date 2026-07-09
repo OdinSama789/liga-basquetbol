@@ -24,35 +24,60 @@
                     <tr>
                         <th>#</th>
                         <th>Equipo</th>
+                        <th>PJ</th>
                         <th>PG</th>
                         <th>PP</th>
                         <th>PF</th>
                         <th>PC</th>
-                        <th>DIF</th>
-                        <th>PTS</th>
+                        <th>Dif</th>
+                        <th>Pts</th>
                     </tr>
                 </thead>
 
                 <tbody>
                     @forelse($tabla as $index => $fila)
                         <tr>
-                            <td class="fw-bold">{{ $index + 1 }}</td>
+                            <td class="fw-bold">
+                                @if($index == 0)
+                                    🥇
+                                @elseif($index == 1)
+                                    🥈
+                                @elseif($index == 2)
+                                    🥉
+                                @else
+                                    {{ $index + 1 }}
+                                @endif
+                            </td>
+
                             <td class="fw-bold">🏀 {{ $fila['equipo'] }}</td>
+                            <td>{{ $fila['partidos'] }}</td>
                             <td><span class="badge bg-success">{{ $fila['ganados'] }}</span></td>
                             <td><span class="badge bg-danger">{{ $fila['perdidos'] }}</span></td>
                             <td>{{ $fila['favor'] }}</td>
                             <td>{{ $fila['contra'] }}</td>
-                            <td>{{ $fila['favor'] - $fila['contra'] }}</td>
+
                             <td>
-                                <span class="badge bg-warning text-dark">
-                                    {{ $fila['ganados'] * 2 }}
+                                @if($fila['diferencia'] > 0)
+                                    <span class="badge bg-success">+{{ $fila['diferencia'] }}</span>
+                                @elseif($fila['diferencia'] < 0)
+                                    <span class="badge bg-danger">{{ $fila['diferencia'] }}</span>
+                                @else
+                                    <span class="badge bg-secondary">0</span>
+                                @endif
+                            </td>
+
+                            <td>
+                                <span class="badge bg-warning text-dark fs-6">
+                                    {{ $fila['puntos'] }}
                                 </span>
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="8" class="text-center text-muted py-4">
-                                No hay datos para mostrar. Registra partidos primero.
+                            <td colspan="9" class="text-center text-muted py-5">
+                                <h3>📋</h3>
+                                <p class="fw-bold mb-1">No hay datos para mostrar.</p>
+                                <small>Registra partidos primero para generar la tabla.</small>
                             </td>
                         </tr>
                     @endforelse

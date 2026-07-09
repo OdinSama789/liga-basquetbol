@@ -118,12 +118,21 @@ class PartidoController extends Controller
 
             $tabla[] = [
                 'equipo' => $equipo->nombre,
+                'partidos' => $ganados + $perdidos,
                 'ganados' => $ganados,
                 'perdidos' => $perdidos,
                 'favor' => $favor,
                 'contra' => $contra,
+                'diferencia' => $favor - $contra,
+                'puntos' => $ganados * 2,
             ];
         }
+        usort($tabla, function ($a, $b) {
+            return $b['puntos'] <=> $a['puntos']
+                ?: $b['diferencia'] <=> $a['diferencia']
+                ?: $b['favor'] <=> $a['favor'];
+        });
+        
 
         return view('partidos.tabla', compact('tabla'));
     }
